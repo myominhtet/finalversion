@@ -255,11 +255,11 @@ def attempt_load(weights, map_location=None):
     # Compatibility updates
     for m in model.modules():
         if type(m) in [nn.Hardswish, nn.LeakyReLU, nn.ReLU, nn.ReLU6, nn.SiLU]:
-            m.inplace = True  # pytorch 1.7.0 compatibility
+            m.inplace = True  
         elif type(m) is nn.Upsample:
-            m.recompute_scale_factor = None  # torch 1.11.0 compatibility
+            m.recompute_scale_factor = None  
         elif type(m) is Conv:
-            m._non_persistent_buffers_set = set()  # pytorch 1.6.0 compatibility
+            m._non_persistent_buffers_set = set()  
     
     if len(model) == 1:
         return model[-1]  # return model
@@ -267,6 +267,4 @@ def attempt_load(weights, map_location=None):
         print('Ensemble created with %s\n' % weights)
         for k in ['names', 'stride']:
             setattr(model, k, getattr(model[-1], k))
-        return model  # return ensemble
-
-
+        return model 
